@@ -1,4 +1,4 @@
-#include "Mathfunction.h"
+ï»¿#include "Mathfunction.h"
 
 Matrix4x4 Inverse(const Matrix4x4& matrix)
 {
@@ -274,19 +274,19 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 
 void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
 {
-	const uint32_t kSubdivision = 12;  // •ªŠ„”
-	const float kLonEvery = 2 * (float)M_PI / kSubdivision;  // Œo“x•ªŠ„1‚Â•ª‚ÌŠp“x
-	const float kLatEvery = (float)M_PI / kSubdivision;      // ˆÜ“x•ªŠ„1‚Â•ª‚ÌŠp“x
-	//ˆÜ“x‚Ì•ûŒü‚É•ªŠ„ -ƒÎ/2 ` ƒÎ/2
+	const uint32_t kSubdivision = 12;  // åˆ†å‰²æ•°
+	const float kLonEvery = 2 * (float)M_PI / kSubdivision;  // çµŒåº¦åˆ†å‰²1ã¤åˆ†ã®è§’åº¦
+	const float kLatEvery = (float)M_PI / kSubdivision;      // ç·¯åº¦åˆ†å‰²1ã¤åˆ†ã®è§’åº¦
+	//ç·¯åº¦ã®æ–¹å‘ã«åˆ†å‰² -Ï€/2 ï½ Ï€/2
 	for (uint32_t LatIndex = 0; LatIndex < kSubdivision; ++LatIndex)
 	{
-		float lat = -(float)M_PI / 2.0f + kLatEvery * LatIndex;  // Œ»İ‚ÌˆÜ“x
+		float lat = -(float)M_PI / 2.0f + kLatEvery * LatIndex;  // ç¾åœ¨ã®ç·¯åº¦
 
-		// Œo“x‚Ì•ûŒü‚É•ªŠ„ 0 ` 2ƒÎ
+		// çµŒåº¦ã®æ–¹å‘ã«åˆ†å‰² 0 ï½ 2Ï€
 		for (uint32_t LonIndex = 0; LonIndex < kSubdivision; ++LonIndex)
 		{
-			float lon = LonIndex * kLonEvery;  //Œ»İ‚ÌˆÜ“x
-			//worldÀ•WŒn‚Å‚Ìa,b,c‚ğ‹‚ß‚é
+			float lon = LonIndex * kLonEvery;  //ç¾åœ¨ã®ç·¯åº¦
+			//worldåº§æ¨™ç³»ã§ã®a,b,cã‚’æ±‚ã‚ã‚‹
 			Vector3 a, b, c;
 			a = Vector3(
 				sphere.center.x + sphere.radius * std::cos(lat) * std::cos(lon),
@@ -306,12 +306,12 @@ void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, con
 				sphere.center.y + sphere.radius * std::sin(lat),
 				sphere.center.z + sphere.radius * std::cos(lat) * std::sin(lon + kLonEvery)
 			);
-			//a,b,c‚ğScreenÀ•WŒn‚Ü‚Å•ÏŠ·
+			//a,b,cã‚’Screenåº§æ¨™ç³»ã¾ã§å¤‰æ›
 			a = Transform(Transform(a, viewProjectionMatrix), viewportMatrix);
 			b = Transform(Transform(b, viewProjectionMatrix), viewportMatrix);
 			c = Transform(Transform(c, viewProjectionMatrix), viewportMatrix);
 
-			//ab,bc‚Åü‚ğˆø‚­
+			//ab,bcã§ç·šã‚’å¼•ã
 			Novice::DrawLine((int)a.x, (int)a.y, (int)b.x, (int)b.y, color);
 			Novice::DrawLine((int)a.x, (int)a.y, (int)c.x, (int)c.y, color);
 
@@ -385,7 +385,7 @@ void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const 
 		Vector3 point = Add(center, extend);
 		points[index] = Transform(Transform(point, viewProjectionMatrix), viewPortMatrix);
 	}
-	// •½–Ê‚Ì4‚Â‚Ì’¸“_‚ğ•`‰æ‚·‚éƒƒWƒbƒNi—á: ü‚ÅŒq‚®‚È‚Çj
+	// å¹³é¢ã®4ã¤ã®é ‚ç‚¹ã‚’æç”»ã™ã‚‹ãƒ­ã‚¸ãƒƒã‚¯ï¼ˆä¾‹: ç·šã§ç¹‹ããªã©ï¼‰
 	Novice::DrawLine((int)points[0].x, (int)points[0].y, (int)points[2].x, (int)points[2].y, color);
 	Novice::DrawLine((int)points[1].x, (int)points[1].y, (int)points[2].x, (int)points[2].y, color);
 	Novice::DrawLine((int)points[0].x, (int)points[0].y, (int)points[3].x, (int)points[3].y, color);
@@ -394,36 +394,48 @@ void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const 
 
 bool isColliding(const Sphere& c1, const Sphere& c2)
 {
-	// Še¬•ª‚Ì·‚ğŒvZ‚µAVector3Œ^‚ÉŠi”[
+	// å„æˆåˆ†ã®å·®ã‚’è¨ˆç®—ã—ã€Vector3å‹ã«æ ¼ç´
 	Vector3 diff;
 	diff.x = c2.center.x - c1.center.x;
 	diff.y = c2.center.y - c1.center.y;
 	diff.z = c2.center.z - c1.center.z;
 
-	// ’†SŠÔ‚Ì‹——£‚ğŒvZ
+	// ä¸­å¿ƒé–“ã®è·é›¢ã‚’è¨ˆç®—
 	float distance = Length(diff);
 
-	// ”¼Œa‚Ì˜a‚ğŒvZ
+	// åŠå¾„ã®å’Œã‚’è¨ˆç®—
 	float radiusSum = c1.radius + c2.radius;
 
-	// ’†SŠÔ‚Ì‹——£‚ª”¼Œa‚Ì˜aˆÈ‰º‚Å‚ ‚ê‚ÎÕ“Ë‚µ‚Ä‚¢‚é
+	// ä¸­å¿ƒé–“ã®è·é›¢ãŒåŠå¾„ã®å’Œä»¥ä¸‹ã§ã‚ã‚Œã°è¡çªã—ã¦ã„ã‚‹
 	return distance <= radiusSum;
 }
 
 void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewProjection, uint32_t color)
 {
-	// 8’¸“_‚ğŒvZ
-	std::array<Vector3, 8> vertices =
-	{
-		Vector3{aabb.min.x, aabb.min.y, aabb.min.z},
-		Vector3{aabb.max.x, aabb.min.y, aabb.min.z},
-		Vector3{aabb.min.x, aabb.max.y, aabb.min.z},
-		Vector3{aabb.max.x, aabb.max.y, aabb.min.z},
-		Vector3{aabb.min.x, aabb.min.y, aabb.max.z},
-		Vector3{aabb.max.x, aabb.min.y, aabb.max.z},
-		Vector3{aabb.min.x, aabb.max.y, aabb.max.z},
-		Vector3{aabb.max.x, aabb.max.y, aabb.max.z}
+	// AABBã®8ã¤ã®é ‚ç‚¹ã‚’è¨ˆç®—
+	Vector3 vertices[8] = {
+		{aabb.min.x, aabb.min.y, aabb.min.z},
+		{aabb.max.x, aabb.min.y, aabb.min.z},
+		{aabb.min.x, aabb.max.y, aabb.min.z},
+		{aabb.max.x, aabb.max.y, aabb.min.z},
+		{aabb.min.x, aabb.min.y, aabb.max.z},
+		{aabb.max.x, aabb.min.y, aabb.max.z},
+		{aabb.min.x, aabb.max.y, aabb.max.z},
+		{aabb.max.x, aabb.max.y, aabb.max.z}
 	};
+
+	// AABBã®ã‚¨ãƒƒã‚¸ã‚’æç”»
+	int edges[12][2] = {
+		{0, 1}, {1, 3}, {3, 2}, {2, 0}, // ä¸‹é¢
+		{4, 5}, {5, 7}, {7, 6}, {6, 4}, // ä¸Šé¢
+		{0, 4}, {1, 5}, {2, 6}, {3, 7}  // å´é¢
+	};
+
+	for (int i = 0; i < 12; i++) {
+		Vector3 start = vertices[edges[i][0]];
+		Vector3 end = vertices[edges[i][1]];
+		Novice::DrawLine(start.x, start.y, end.x, end.y, color);
+	}
 }
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)

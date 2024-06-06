@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #define _USE_MATH_DEFINES
 #include <struct.h>
 #include <assert.h>
@@ -9,39 +9,39 @@
 #include <corecrt_math.h>
 
 
-//‹ts—ñ
+//é€†è¡Œåˆ—
 Matrix4x4 Inverse(const Matrix4x4& matrix);
 
-//À•W•ÏŠ·
+//åº§æ¨™å¤‰æ›
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
-//1. X²‰ñ“]s—ñ
+//1. Xè»¸å›è»¢è¡Œåˆ—
 Matrix4x4 MakeRotateXMatrix(float radian);
 
-//2. Y²‰ñ“]s—ñ
+//2. Yè»¸å›è»¢è¡Œåˆ—
 Matrix4x4 MakeRotateYMatrix(float radian);
 
-//3. Z²‰ñ“]s—ñ
+//3. Zè»¸å›è»¢è¡Œåˆ—
 Matrix4x4 MakeRotateZMatrix(float radian);
 
 Matrix4x4  Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 
-// ƒAƒtƒBƒ“•ÏŠ·s—ñŒvZŠÖ”
+// ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›è¡Œåˆ—è¨ˆç®—é–¢æ•°
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
 
-//1.“§‹“Š‰es—ñ
+//1.é€è¦–æŠ•å½±è¡Œåˆ—
 Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
 
-//2.³Ë‰es—ñ
+//2.æ­£å°„å½±è¡Œåˆ—
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
 
-//3.ƒrƒ…[ƒ|[ƒg•ÏŠ·s—ñ
+//3.ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆå¤‰æ›è¡Œåˆ—
 Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth);
 
-//ƒOƒŠƒbƒh
+//ã‚°ãƒªãƒƒãƒ‰
 void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix);
 
-//‹…
+//çƒ
 void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
 float Length(const Vector3& v);
@@ -59,7 +59,7 @@ Vector3 Multiply2(float scalar, const Vector3& vector);
 void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix, uint32_t color);
 
 
-// ‰~i‹…j‚ÌÕ“Ë”»’èŠÖ”
+// å††ï¼ˆçƒï¼‰ã®è¡çªåˆ¤å®šé–¢æ•°
 bool isColliding(const Sphere& c1, const Sphere& c2);
 
 bool Colliding(const Sphere& c1, const Plane& c2);
