@@ -412,18 +412,32 @@ bool isColliding(const Sphere& c1, const Sphere& c2)
 
 void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewProjection, uint32_t color)
 {
-	// 8頂点を計算
-	std::array<Vector3, 8> vertices =
-	{
-		Vector3{aabb.min.x, aabb.min.y, aabb.min.z},
-		Vector3{aabb.max.x, aabb.min.y, aabb.min.z},
-		Vector3{aabb.min.x, aabb.max.y, aabb.min.z},
-		Vector3{aabb.max.x, aabb.max.y, aabb.min.z},
-		Vector3{aabb.min.x, aabb.min.y, aabb.max.z},
-		Vector3{aabb.max.x, aabb.min.y, aabb.max.z},
-		Vector3{aabb.min.x, aabb.max.y, aabb.max.z},
-		Vector3{aabb.max.x, aabb.max.y, aabb.max.z}
+	// AABBの8つの頂点を計算
+	Vector3 vertices[8] = {
+		{aabb.min.x, aabb.min.y, aabb.min.z},
+		{aabb.max.x, aabb.min.y, aabb.min.z},
+		{aabb.min.x, aabb.max.y, aabb.min.z},
+		{aabb.max.x, aabb.max.y, aabb.min.z},
+		{aabb.min.x, aabb.min.y, aabb.max.z},
+		{aabb.max.x, aabb.min.y, aabb.max.z},
+		{aabb.min.x, aabb.max.y, aabb.max.z},
+		{aabb.max.x, aabb.max.y, aabb.max.z}
 	};
+
+	// AABBのエッジを描画
+	int edges[12][2] = {
+		{0, 1}, {1, 3}, {3, 2}, {2, 0}, // 下面
+		{4, 5}, {5, 7}, {7, 6}, {6, 4}, // 上面
+		{0, 4}, {1, 5}, {2, 6}, {3, 7}  // 側面
+	};
+
+	for (int i = 0; i < 12; i++) {
+		Vector3 start = vertices[edges[i][0]];
+		Vector3 end = vertices[edges[i][1]];
+		Novice::DrawLine(start.x, start.y, end.x, end.y, color);
+	}
+
+	
 }
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
