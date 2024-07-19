@@ -1,6 +1,6 @@
 #pragma once
 #include <Novice.h>
-#include "Result.h"
+#include  "Result.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -26,9 +26,9 @@ public:
 	/// 
 	void InPut();
 
-	///
-	///初期化
-	///
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
 	/// 
@@ -46,5 +46,3 @@ public:
 	/// 
 	void WholeLoop();
 };
-
-

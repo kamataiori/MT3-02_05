@@ -1,4 +1,5 @@
 ﻿#include "Mathfunction.h"
+#include <algorithm>
 
 Matrix4x4 Inverse(const Matrix4x4& matrix)
 {
@@ -329,6 +330,17 @@ float Length(const Vector3& v)
 	return LengthResult;
 }
 
+float Length(const Vector3& point1, const Vector3& point2)
+{
+	Vector3 difference;
+	difference.x = point1.x - point2.x;
+	difference.y = point1.y - point2.y;
+	difference.z = point1.z - point2.z;
+
+	return sqrtf(difference.x * difference.x + difference.y * difference.y + difference.z * difference.z);
+}
+
+
 Vector3 Normalize(const Vector3& v)
 {
 	float length = Length(v);
@@ -410,10 +422,9 @@ bool isColliding(const Sphere& c1, const Sphere& c2)
 	return distance <= radiusSum;
 }
 
-void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewProjection, uint32_t color)
+void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix, uint32_t color)
 {
-	// AABBの8つの頂点を計算
-	Vector3 vertices[8] = {
+	Vector3 corners[8] = {
 		{aabb.min.x, aabb.min.y, aabb.min.z},
 		{aabb.max.x, aabb.min.y, aabb.min.z},
 		{aabb.min.x, aabb.max.y, aabb.min.z},
@@ -424,20 +435,54 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Mat
 		{aabb.max.x, aabb.max.y, aabb.max.z}
 	};
 
-	// AABBのエッジを描画
-	int edges[12][2] = {
-		{0, 1}, {1, 3}, {3, 2}, {2, 0}, // 下面
-		{4, 5}, {5, 7}, {7, 6}, {6, 4}, // 上面
-		{0, 4}, {1, 5}, {2, 6}, {3, 7}  // 側面
-	};
-
-	for (int i = 0; i < 12; i++) {
-		Vector3 start = vertices[edges[i][0]];
-		Vector3 end = vertices[edges[i][1]];
-		Novice::DrawLine((int)start.x, (int)start.y, (int)end.x, (int)end.y, color);
+	Vector3 screenCorners[8];
+	for (int i = 0; i < 8; i++)
+	{
+		Vector3 temp = Transform(corners[i], viewProjectionMatrix);
+		screenCorners[i] = Transform(temp, viewPortMatrix);
 	}
 
-	
+	// Draw the bottom face (min z)
+	Novice::DrawLine((int)screenCorners[0].x, (int)screenCorners[0].y, (int)screenCorners[1].x, (int)screenCorners[1].y, color);
+	Novice::DrawLine((int)screenCorners[1].x, (int)screenCorners[1].y, (int)screenCorners[3].x, (int)screenCorners[3].y, color);
+	Novice::DrawLine((int)screenCorners[3].x, (int)screenCorners[3].y, (int)screenCorners[2].x, (int)screenCorners[2].y, color);
+	Novice::DrawLine((int)screenCorners[2].x, (int)screenCorners[2].y, (int)screenCorners[0].x, (int)screenCorners[0].y, color);
+
+	// Draw the top face (max z)
+	Novice::DrawLine((int)screenCorners[4].x, (int)screenCorners[4].y, (int)screenCorners[5].x, (int)screenCorners[5].y, color);
+	Novice::DrawLine((int)screenCorners[5].x, (int)screenCorners[5].y, (int)screenCorners[7].x, (int)screenCorners[7].y, color);
+	Novice::DrawLine((int)screenCorners[7].x, (int)screenCorners[7].y, (int)screenCorners[6].x, (int)screenCorners[6].y, color);
+	Novice::DrawLine((int)screenCorners[6].x, (int)screenCorners[6].y, (int)screenCorners[4].x, (int)screenCorners[4].y, color);
+
+	// Draw the vertical edges connecting top and bottom faces
+	Novice::DrawLine((int)screenCorners[0].x, (int)screenCorners[0].y, (int)screenCorners[4].x, (int)screenCorners[4].y, color);
+	Novice::DrawLine((int)screenCorners[1].x, (int)screenCorners[1].y, (int)screenCorners[5].x, (int)screenCorners[5].y, color);
+	Novice::DrawLine((int)screenCorners[2].x, (int)screenCorners[2].y, (int)screenCorners[6].x, (int)screenCorners[6].y, color);
+	Novice::DrawLine((int)screenCorners[3].x, (int)screenCorners[3].y, (int)screenCorners[7].x, (int)screenCorners[7].y, color);
+
+	//Novice::DrawLine((int)corners[.x, (int)start.y, (int)end.x, (int)end.y, color);
+
+
+	//Vector3 aabbMin = Transform(aabb.min, viewProjectionMatrix);
+	//Vector3 aabbMax = Transform(aabb.max, viewProjectionMatrix);
+	//Vector3 screenMin = Transform(aabbMin, viewPortMatrix);
+	//Vector3 screenMax = Transform(aabbMax, viewPortMatrix);
+	//
+	//Novice::DrawLine((int)screenMin.x, (int)screenMin.y, (int)screenMax.x, (int)screenMax.y, color);
+}
+
+bool IsCollision(const AABB& aabb1, const AABB& aabb2)
+{
+	//aabb1.min.x = (std::min)(aabb1.min.x, aabb1.max.x);
+
+	if ((aabb1.min.x <= aabb2.max.x && aabb1.max.x >= aabb2.min.x) &&
+		(aabb1.min.y <= aabb2.max.y && aabb1.max.y >= aabb2.min.y) &&
+		(aabb1.min.z <= aabb2.max.z && aabb1.max.z >= aabb2.min.z))
+	{
+		return true;
+	}
+
+	return false;
 }
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
@@ -452,4 +497,21 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Mat
 //	
 //}
 
+bool IsCollision(const AABB& aabb, const Sphere& sphere)
+{
+	Vector3 closestPoint =
+	{
+		std::clamp(sphere.center.x, aabb.min.x, aabb.max.x),
+		std::clamp(sphere.center.y, aabb.min.y, aabb.max.y),
+		std::clamp(sphere.center.z, aabb.min.z, aabb.max.z)
+	};
 
+	float distance = Length(closestPoint, sphere.center);
+
+	if (distance <= sphere.radius)
+	{
+		return true;
+	}
+
+	return false;
+}

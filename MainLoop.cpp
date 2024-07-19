@@ -1,6 +1,6 @@
 #include "MainLoop.h"
 
-MainLoop::MainLoop() 
+MainLoop::MainLoop()
 {
 	//char keys[256] = 
 	for (int i = 0; i < 256; i++)
@@ -12,11 +12,13 @@ MainLoop::MainLoop()
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
+	result_ = new Result;
+
 }
 
 MainLoop::~MainLoop() { delete result_; }
 
-void MainLoop::InPut() 
+void MainLoop::InPut()
 {
 	// キー入力を受け取る
 	memcpy(preKeys, keys, 256);
@@ -32,15 +34,17 @@ void MainLoop::Updata() { result_->Update(); }
 
 void MainLoop::Draw() { result_->Draw(); }
 
-void MainLoop::WholeLoop() 
+void MainLoop::WholeLoop()
 {
+
+	Initialize();
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
 		Novice::BeginFrame();
 
 		InPut();
-		Initialize();
 
 		///
 		/// ↓更新処理ここから

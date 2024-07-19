@@ -44,7 +44,10 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 //球
 void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
-float Length(const Vector3& v);
+float Length(const Vector3& point1, const Vector3& point2);
+
+float Length(const Vector3& point1, const Vector3& point2);
+
 
 Vector3 Normalize(const Vector3& v);
 
@@ -67,4 +70,8 @@ bool Colliding(const Sphere& c1, const Plane& c2);
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
-void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewProjection, uint32_t color);
+void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix, uint32_t color);
+
+bool IsCollision(const AABB& aabb1, const AABB& aabb2);
+
+bool IsCollision(const AABB& aabb, const Sphere& sphere);
