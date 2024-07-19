@@ -40,6 +40,7 @@ void MainLoop::WholeLoop()
 		Novice::BeginFrame();
 
 		InPut();
+		Initialize();
 
 		///
 		/// ↓更新処理ここから
