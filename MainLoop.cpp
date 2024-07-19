@@ -14,7 +14,7 @@ MainLoop::MainLoop()
 
 }
 
-MainLoop::~MainLoop() {}
+MainLoop::~MainLoop() { delete result_; }
 
 void MainLoop::InPut() 
 {
@@ -23,9 +23,14 @@ void MainLoop::InPut()
 	Novice::GetHitKeyStateAll(keys);
 }
 
-void MainLoop::Updata() {}
+void MainLoop::Initialize()
+{
+	result_->Initialize();
+}
 
-void MainLoop::Draw() {}
+void MainLoop::Updata() { result_->Update(); }
+
+void MainLoop::Draw() { result_->Draw(); }
 
 void MainLoop::WholeLoop() 
 {
