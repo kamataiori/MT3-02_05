@@ -7,6 +7,7 @@
 #include <math.h>
 #include <objidl.h>
 #include <corecrt_math.h>
+#include "Vector3.h"
 
 
 //逆行列
@@ -67,4 +68,6 @@ bool Colliding(const Sphere& c1, const Plane& c2);
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
-void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewProjection, uint32_t color);
+void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewPortMatrix, uint32_t color);
+
+bool IsCollision(const AABB& aabb1, const AABB& aabb2);
