@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Vector2.h"
 #include "Vector3.h"
 
@@ -36,15 +36,15 @@ struct Plane {
 
 struct Segment
 {
-	Vector3 origin;  //n“_
-	Vector3 diff;  //I“_‚Ö‚Ì·•ªƒxƒNƒgƒ‹
+	Vector3 origin;  //å§‹ç‚¹
+	Vector3 diff;  //çµ‚ç‚¹ã¸ã®å·®åˆ†ãƒ™ã‚¯ãƒˆãƒ«
 };
 
 struct Triangle {
-	Vector3 vertices[3];  //’¸“_
+	Vector3 vertices[3];  //é ‚ç‚¹
 };
 
 struct AABB {
-	Vector3 min;//Å¬“_
-	Vector3 max;//Å‘å“_
+	Vector3 min;//æœ€å°ç‚¹
+	Vector3 max;//æœ€å¤§ç‚¹
 };

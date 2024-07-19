@@ -434,7 +434,7 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Mat
 	for (int i = 0; i < 12; i++) {
 		Vector3 start = vertices[edges[i][0]];
 		Vector3 end = vertices[edges[i][1]];
-		Novice::DrawLine(start.x, start.y, end.x, end.y, color);
+		Novice::DrawLine((int)start.x, (int)start.y, (int)end.x, (int)end.y, color);
 	}
 }
 
