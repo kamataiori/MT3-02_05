@@ -7,6 +7,7 @@
 #include <math.h>
 #include <objidl.h>
 #include <corecrt_math.h>
+#include "Vector3.h"
 
 
 //逆行列
@@ -44,10 +45,7 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 //球
 void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
-float Length(const Vector3& point1, const Vector3& point2);
-
-float Length(const Vector3& point1, const Vector3& point2);
-
+float Length(const Vector3& v);
 
 Vector3 Normalize(const Vector3& v);
 
@@ -75,3 +73,5 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const Mat
 bool IsCollision(const AABB& aabb1, const AABB& aabb2);
 
 bool IsCollision(const AABB& aabb, const Sphere& sphere);
+
+Matrix4x4 Subtract(Matrix4x4& m1, Matrix4x4& m2);

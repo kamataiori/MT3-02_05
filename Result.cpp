@@ -3,6 +3,7 @@
 
 void Result::Initialize()
 {
+
 }
 
 void Result::Update()
@@ -20,26 +21,26 @@ void Result::Update()
 
 	//Vector3 project = Project(Subtract(point, segment.origin), segment.diff);
 	//Vector3 closestPoint = ClosestPoint(point, segment);
-	Sphere pointSphere{ point, 0.01f };
+	//Sphere pointSphere{ point, 0.01f };
 	//Sphere closestPointSphere{ closestPoint, 0.01f };
 
-	if (IsCollision(aabb1, sphere))
+	/*if (IsCollision(aabb1, aabb2))
 	{
-		color = RED;
+		aabb1.color = RED;
 	}
 	else
 	{
-		color = WHITE;
-	}
+		aabb1.color = WHITE;
+	}*/
 }
 
 void Result::Draw()
 {
-	//DrawGrid(viewMatrixProjectionMatrix, viewportMatrix);
+	DrawGrid(viewMatrixProjectionMatrix, viewportMatrix);
 
-	DrawSphere(sphere, viewMatrixProjectionMatrix, viewportMatrix, color);
+	//DrawSphere(pointSphere, viewMatrixProjectionMatrix, viewportMatrix, sphere.color);
 	//DrawSphere(closestPointSphere, viewMatrixProjectionMatrix, viewportMatrix, WHITE);
-	//DrawSphere(sphere, viewMatrixProjectionMatrix, viewportMatrix, sphere.color);
+	DrawSphere(sphere, viewMatrixProjectionMatrix, viewportMatrix, WHITE);
 	//DrawSphere(sphere2, viewMatrixProjectionMatrix, viewportMatrix, sphere2.color);
 	/*if(IsCollision(sphere, plane))
 	{
@@ -53,16 +54,27 @@ void Result::Draw()
 	//Novice::DrawLine((int)start.x, (int)start.y, (int)end.x, (int)end.y, segment.color);
 
 	DrawAABB(aabb1, viewMatrixProjectionMatrix, viewportMatrix, color);
+	if (IsCollision(aabb1, sphere))
+	{
+		color = RED;
+	}
+	else
+	{
+		color = WHITE;
+	}
+	//DrawAABB(aabb2, viewMatrixProjectionMatrix, viewportMatrix, WHITE);
 
 	ImGui::Begin("Window");
 	ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
 	ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
-	ImGui::DragFloat3("SphereCenter", &sphere.center.x, 0.01f);
-	ImGui::DragFloat("SphereRadius", &sphere.radius, 0.01f);
+	//ImGui::DragFloat3("SphereCenter", &sphere.center.x, 0.01f);
+	//ImGui::DragFloat("SphereRadius", &sphere.radius, 0.01f);
 	ImGui::DragFloat3("aabb1 min", &aabb1.min.x, 0.01f);
 	ImGui::DragFloat3("aabb1 max", &aabb1.max.x, 0.01f);
-	//ImGui::DragFloat3("aabb2 min", &aabb2.min.x, 0.01f);
-	//ImGui::DragFloat3("aabb2 max", &aabb2.max.x, 0.01f);
+	ImGui::DragFloat3("aabb2 min", &aabb2.min.x, 0.01f);
+	ImGui::DragFloat3("aabb2 max", &aabb2.max.x, 0.01f);
+	/*ImGui::DragFloat("theta", &theta, 0.01f);
+	ImGui::DragFloat("phi", &phi, 0.01f);*/
 	//ImGui::DragFloat3("Triangle 2", &triangle.vertices[2].x, 0.01f);
 	//ImGui::DragFloat3("Line", &segment.origin.x, 0.01f);
 	//ImGui::DragFloat3("Line diff", &segment.diff.x, 0.01f);

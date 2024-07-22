@@ -1,4 +1,4 @@
-﻿#include "Mathfunction.h"
+﻿#include "MathFunction.h"
 #include <algorithm>
 
 Matrix4x4 Inverse(const Matrix4x4& matrix)
@@ -330,17 +330,6 @@ float Length(const Vector3& v)
 	return LengthResult;
 }
 
-float Length(const Vector3& point1, const Vector3& point2)
-{
-	Vector3 difference;
-	difference.x = point1.x - point2.x;
-	difference.y = point1.y - point2.y;
-	difference.z = point1.z - point2.z;
-
-	return sqrtf(difference.x * difference.x + difference.y * difference.y + difference.z * difference.z);
-}
-
-
 Vector3 Normalize(const Vector3& v)
 {
 	float length = Length(v);
@@ -475,14 +464,9 @@ bool IsCollision(const AABB& aabb1, const AABB& aabb2)
 {
 	//aabb1.min.x = (std::min)(aabb1.min.x, aabb1.max.x);
 
-	if ((aabb1.min.x <= aabb2.max.x && aabb1.max.x >= aabb2.min.x) &&
+	return (aabb1.min.x <= aabb2.max.x && aabb1.max.x >= aabb2.min.x) &&
 		(aabb1.min.y <= aabb2.max.y && aabb1.max.y >= aabb2.min.y) &&
-		(aabb1.min.z <= aabb2.max.z && aabb1.max.z >= aabb2.min.z))
-	{
-		return true;
-	}
-
-	return false;
+		(aabb1.min.z <= aabb2.max.z && aabb1.max.z >= aabb2.min.z);
 }
 
 //void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
@@ -506,7 +490,15 @@ bool IsCollision(const AABB& aabb, const Sphere& sphere)
 		std::clamp(sphere.center.z, aabb.min.z, aabb.max.z)
 	};
 
-	float distance = Length(closestPoint, sphere.center);
+
+	Vector3 centerToPoint =
+	{
+		{closestPoint.x - sphere.center.x},
+		{closestPoint.y - sphere.center.y},
+		{closestPoint.z - sphere.center.z}
+	};
+
+	float distance = Length(centerToPoint);
 
 	if (distance <= sphere.radius)
 	{
