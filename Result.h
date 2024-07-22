@@ -5,6 +5,11 @@ class Result
 {
 public:
 
+	AABB aabb2{
+		.min{0.2f, 0.2f, 0.2f},
+		.max{1.0f, 1.0f, 1.0f},
+	};
+
 
 	void Initialize();
 
@@ -59,10 +64,10 @@ public:
 		.max{0.0f, 0.0f, 0.0f}
 	};
 
-	AABB aabb2{
+	/*AABB aabb2{
 		.min{0.2f, 0.2f, 0.2f},
 		.max{1.0f, 1.0f, 1.0f},
-	};
+	};*/
 
 	int kWindowWidth = 1280;
 	int kWindowHeight = 720;
